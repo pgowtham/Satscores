@@ -9,8 +9,7 @@ SATNYC is an Android app that provides information about schools in New York Cit
 
 ## Screenshots
 
-![Home Screen](screenshots/home_screen.png)
-![Detail Screen](screenshots/detail_screen.png)
+![Home Screen](screenshots/home_screen.png) ![Detail Screen](screenshots/detail_screen.png)
 
 ## Tech Stack
 
