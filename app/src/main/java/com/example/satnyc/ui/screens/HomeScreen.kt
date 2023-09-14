@@ -70,6 +70,7 @@ fun schoolItem(school: School, navController: NavController, viewModel: SchoolVi
             .height(110.dp)
             .clickable {
                 navController.navigate(Screens.Detail.route + "/${school.dbn}")
+                viewModel.updateList(school)
             },
         shape = RoundedCornerShape(8.dp),
         elevation = 3.dp
