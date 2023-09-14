@@ -27,17 +27,28 @@ class SchoolViewModel @Inject constructor(
 
     val schoolState: MutableState<ViewState<List<School>>> = mutableStateOf(ViewState.Loading)
     val satScoreState: MutableState<ViewState<List<SatScores>>> = mutableStateOf(ViewState.Loading)
-
+    var isNetworkCallMade = false
+    var mutableSchoolList = mutableListOf<School>()
 
     fun getSchools() {
-        viewModelScope.launch {
-            try {
-                val schoolResponse = dataRepository.getSchoolData()
-                schoolState.value = ViewState.Success(schoolResponse)
-            } catch (exception: Exception) {
-                schoolState.value = ViewState.Error(exception.message ?: "An error occurred")
+        if(!isNetworkCallMade){
+            viewModelScope.launch {
+                try {
+                    isNetworkCallMade = true
+                    val schoolResponse = dataRepository.getSchoolData()
+                    mutableSchoolList = schoolResponse.toMutableList()
+                    schoolState.value = ViewState.Success(mutableSchoolList)
+                } catch (exception: Exception) {
+                    schoolState.value = ViewState.Error(exception.message ?: "An error occurred")
+                }
             }
         }
+    }
+
+    fun updateList(school: School) {
+        mutableSchoolList.remove(school)
+        mutableSchoolList.add(0, school)
+        schoolState.value = ViewState.Success(mutableSchoolList)
     }
 
     fun getSatScores(dbn: String) {
